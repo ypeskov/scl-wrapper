@@ -1,0 +1,52 @@
+[
+    {
+        "name": "ise/php-soundcloud",
+        "version": "3.0.1",
+        "version_normalized": "3.0.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/internalsystemerror/php-soundcloud.git",
+            "reference": "ac3ff2dce2a6e6d34636c58e66fd316d722c31df"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/internalsystemerror/php-soundcloud/zipball/ac3ff2dce2a6e6d34636c58e66fd316d722c31df",
+            "reference": "ac3ff2dce2a6e6d34636c58e66fd316d722c31df",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3"
+        },
+        "time": "2014-02-03 15:49:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Soundcloud\\": "src/",
+                "SoundcloudTest\\": "tests/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Anton Lindqvist",
+                "email": "anton@qvister.se",
+                "homepage": "http://qvister.se/",
+                "role": "developer"
+            },
+            {
+                "name": "Gary Lockett",
+                "email": "ise@garylockett.com",
+                "homepage": "http://www.garylockett.com/"
+            }
+        ],
+        "description": "API Wrapper for SoundCloud written in PHP with support for authentication using OAuth 2.0 by Anton Lindqvist (mptre), composer support added by Gary Lockett (ise)",
+        "homepage": "https://github.com/internalsystemerror/php-soundcloud",
+        "keywords": [
+            "soundcloud"
+        ]
+    }
+]

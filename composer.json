@@ -1,0 +1,11 @@
+{
+    "require": {
+        "ise/php-soundcloud": "3.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "SoundCloud\\": "vendor/ise/php-soundcloud/src/Soundcloud",
+            "SclWrapper\\": "vendor/scl-wrapper/src"
+        }
+    }
+}
