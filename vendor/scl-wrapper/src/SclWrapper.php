@@ -20,18 +20,22 @@ use Soundcloud\Service;
 class SclWrapper {
     /**
      * Stores config for creating the instance with parameters of SoundCloud app.
-     *
-     * @var array
+     * @var Array
      */
     protected $config = array();
 
+    /**
+     * Store auth url for calback redirect.
+     * @var String
+     */
     protected $authUrl;
-    protected $SclService;
-    protected $myInfo;
-    protected $accessToken;
 
-    const CONFIG_PATH = 'config/config.php';
-    const SERVICE_URL = 'http://soundcloud.com/';
+    /**
+     * SoundCloud SDK Class.
+     *
+     * @var \Soundcloud\Service
+     */
+    protected $SclService;
 
     public function __construct($config) {
         $this->config = $config;
@@ -44,10 +48,11 @@ class SclWrapper {
                 $this->config['development']
             );
         } catch(Exception $e) {
-            var_dump($e);
+            /**
+             * @TODO make something :)
+             */
+            throw new \Exception($e);
         }
-
-        $this->getAuthUrl();
     }
 
     public function getAccessToken($code) {
@@ -81,7 +86,7 @@ class SclWrapper {
         $tracks = [];
         foreach($iterator as $permalink) {
             //first let's get user's info
-            $url    = self::SERVICE_URL . $permalink;
+            $url    = $this->config['sclUrl'] . $permalink;
             $user   = $this->resolveResource($url);
 
             //get all tracks by a user
@@ -104,6 +109,11 @@ class SclWrapper {
         return json_decode($resource);
     }
 
+    /**
+     * Returns authentication callback url on SC Service.
+     *
+     * @return string
+     */
     public function getAuthUrl() {
         $this->authUrl = $this->SclService->getAuthorizeUrl();
 
