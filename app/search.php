@@ -4,8 +4,8 @@ session_start();
 require_once('bootstrap.php');
 
 
-if ( isset($_GET['users']) ) {
-    $users = explode(',', $_GET['users']);
+if ( isset($_GET['permalinks']) ) {
+    $users = explode(',', $_GET['permalinks']);
 
     $tracks = $scl->searchTracks($users);
 
@@ -16,5 +16,3 @@ if ( isset($_GET['users']) ) {
     echo $scl->getHtml($fullHtml, ['template' => $searchHtml, ]);
 
 }
-//$tracks = $scl->searchTracks($userId);
-//var_dump($tracks);

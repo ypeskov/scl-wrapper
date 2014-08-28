@@ -20,7 +20,7 @@ if ( isset($_SESSION['SclWrapper']['accessToken']['access_token']) ) {
 
 <body>
     <div>
-        <a href="/app/search.php?users=<?= implode($userList, ','); ?>">Get my tracks</a>
+        <a href="/app/search.php?permalinks=<?= implode($userList, ','); ?>">Get my tracks</a>
     </div>
 </body>
 </html>

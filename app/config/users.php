@@ -1,5 +1,6 @@
 <?php
 
 return [
-    '110568804',
+    'azazkin',
+    'thekeenone',
 ];

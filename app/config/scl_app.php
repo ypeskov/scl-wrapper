@@ -5,6 +5,6 @@ return [
     'clientSecret'      => 'b0493f5798fc254598373d90013dffc2',
     'redirectURL'       => 'http://test.local/app/auth.php',
     'redirectAfterAuth' => 'http://test.local/app/methods.php',
-    'redirectHome'      => 'http://test.local/app/home.php',
+    'redirectHome'      => 'http://test.local/home.php',
     'development'       => false,
 ];
