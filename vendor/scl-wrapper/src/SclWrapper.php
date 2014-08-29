@@ -60,6 +60,12 @@ class SclWrapper {
         }
     }
 
+    /**
+     * Returns an array of accessToken according to the code of auth from Service
+     *
+     * @param string $code
+     * @return array
+     */
     public function getAccessToken($code) {
         $accessToken = null;
 
@@ -72,6 +78,12 @@ class SclWrapper {
         return $accessToken;
     }
 
+    /**
+     * Sets the access token for using the previous identification.
+     *
+     * @param string $token
+     * @return $this
+     */
     public function setAccessToken($token) {
         $this->SclService->setAccessToken($token);
 
@@ -94,7 +106,7 @@ class SclWrapper {
      * @param int $offset
      * @return array
      */
-    public function searchTracks($permalinks, $limit=200, $offset=0) {
+    public function searchTracksByPermalinks($permalinks, $limit=200, $offset=0) {
         $iterator = new \ArrayIterator($permalinks);
         $tracks = [];
 
@@ -148,6 +160,10 @@ class SclWrapper {
 
         try {
             $user   = $this->resolveResource($url);
+
+            if ( $user->kind !== 'user' ) {
+                throw new InvalidHttpResponseCodeException('Resource is not a user', 'Not a user', 404);
+            }
         } catch(InvalidHttpResponseCodeException $e) {
             throw $e;
         }
@@ -179,6 +195,39 @@ class SclWrapper {
         $this->authUrl = $this->SclService->getAuthorizeUrl();
 
         return $this->authUrl;
+    }
+
+    public function createPlayList($listName, $tracks) {
+        $playlist = 'playlist[title]=' . $listName;
+
+        $trackURI = '';
+        foreach($tracks as $track) {
+            try {
+                $trackInfo = $this->getTrackInfoByPermalink($track);
+                $trackURI .= '&playlist[tracks][][id]=' . $trackInfo->id;
+            } catch(InvalidHttpResponseCodeException $e) {
+                continue;
+            }
+        }
+
+        $finalURI = $playlist . $trackURI;
+
+        $response = json_decode($this->SclService->post('playlists', $finalURI));
+
+        return $response;
+    }
+
+    /**
+     * Returns info about a track according to its permalink.
+     *
+     * @param $trackPermalink
+     * @return Array|stdClass
+     * @throws InvalidHttpResponseCodeException
+     */
+    protected function getTrackInfoByPermalink($trackPermalink) {
+        $track = $this->resolveResource($trackPermalink);
+
+        return $track;
     }
 
     /**

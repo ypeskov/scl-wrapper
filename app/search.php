@@ -7,7 +7,7 @@ require_once('bootstrap.php');
 if ( isset($_GET['permalinks']) ) {
     $users = explode(',', $_GET['permalinks']);
 
-    $tracks = $scl->searchTracks($users);
+    $tracks = $scl->searchTracksByPermalinks($users);
 
     $tplName = __DIR__ . '/templates/artists_tracks.php';
     $searchHtml = $scl->getHtml($tplName, ['tracks' => $tracks, ]);
