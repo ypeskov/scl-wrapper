@@ -8,6 +8,6 @@ This is a wrapper for SoundCloud PHP SDK with limited number of methods.
 
 ### Short manual ###
 
-* TBD
-* TBD
+* The wrapper class itself is located: /vendor/scl-wrapper/src/SclWrapper.php
+* TODO: describe interface
 
