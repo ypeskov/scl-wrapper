@@ -49,5 +49,13 @@ if ( isset($_SESSION['SclWrapper']['accessToken']['access_token']) ) {
         <?php endforeach; ?>
     </div>
 
+    <hr />
+
+    <form name="like_track" method="post" action="/app/like.php">
+        <input name="track_to_like" type="text" />
+        <br />
+        <input type="submit" value="Like long" />
+    </form>
+
 </body>
 </html>

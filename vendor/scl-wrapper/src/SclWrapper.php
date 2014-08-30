@@ -135,6 +135,28 @@ class SclWrapper {
     }
 
     /**
+     * Likes a track by permalink.
+     *
+     * @param string $permalink
+     * @return stdClass | null
+     * @throws \Exception
+     * @throws \Soundcloud\Exception\InvalidHttpResponseCodeException
+     */
+    public function likeTrack($permalink) {
+        $response = null;
+
+        try {
+            $track = $this->getTrackInfoByPermalink(self::SERVICE_URL . $permalink);
+
+            $response = json_decode($this->SclService->put('me/favorites/' . $track->id, []));
+        } catch(InvalidHttpResponseCodeException $e) {
+            throw $e;
+        }
+
+        return $response;
+    }
+
+    /**
      * Return all uploaded tracks for users in $permalinks array.
      *
      * @param array $permalinks
