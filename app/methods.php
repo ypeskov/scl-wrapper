@@ -52,6 +52,7 @@ if ( isset($_SESSION['SclWrapper']['accessToken']['access_token']) ) {
     <hr />
 
     <form name="like_track" method="post" action="/app/like.php">
+        <p>Track to like (permalink):</p>
         <input name="track_to_like" type="text" />
         <br />
         <input type="submit" value="Like long" />
@@ -60,9 +61,25 @@ if ( isset($_SESSION['SclWrapper']['accessToken']['access_token']) ) {
     <hr />
 
     <form name="follow_user" method="post" action="/app/follow.php">
+        <p>User to follow (permalink):</p>
         <input name="user_to_follow" type="text" />
         <br />
         <input type="submit" value="Follow the user" />
+    </form>
+
+    <hr />
+
+    <form name="comment_track" method="post" action="/app/comment.php">
+        Track to comment (permalink):&nbsp;
+        <input name="track_to_comment" name="track_name" type="text" />
+        <br />
+        Comment:&nbsp;
+        <input type="text" value="comment here" name="comment_body" />
+        <br />
+        Time to comment:&nbsp;
+        <input type="text" value="1200" name="comment_time" />
+        <br />
+        <input type="submit" value="Comment the track" />
     </form>
 </body>
 </html>

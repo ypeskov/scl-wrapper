@@ -179,6 +179,35 @@ class SclWrapper {
     }
 
     /**
+     * Adds a comment to a track basing on permalink of a track.
+     *
+     * @param string $trackLink
+     * @param string $comment
+     * @param string|int $commentTime
+     * @return stdClass
+     * @throws \Exception
+     * @throws \Soundcloud\Exception\InvalidHttpResponseCodeException
+     */
+    public function commentTrack($trackLink, $comment, $commentTime) {
+        try {
+            $track = $this->getTrackInfoByPermalink(self::SERVICE_URL . $trackLink);
+
+            $response = $this
+                ->SclService
+                ->post('tracks/' . $track->id . '/comments',
+                        [
+                            'comment[body]'     => $comment,
+                            'comment[timestamp]'=> $commentTime,
+                        ]);
+
+        } catch(InvalidHttpResponseCodeException $e) {
+            throw $e;
+        }
+
+        return json_decode($response);
+    }
+
+    /**
      * Return all uploaded tracks for users in $permalinks array.
      *
      * @param array $permalinks
@@ -322,7 +351,11 @@ class SclWrapper {
      * @throws InvalidHttpResponseCodeException
      */
     protected function getTrackInfoByPermalink($trackPermalink) {
-        $track = $this->resolveResource($trackPermalink);
+        try {
+            $track = $this->resolveResource($trackPermalink);
+        } catch(InvalidHttpResponseCodeException $e) {
+            throw $e;
+        }
 
         return $track;
     }
