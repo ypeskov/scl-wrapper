@@ -39,5 +39,15 @@ if ( isset($_SESSION['SclWrapper']['accessToken']['access_token']) ) {
             <input type="submit" value="Create playlist" />
         </form>
     </div>
+
+    <hr />
+
+    <div>
+        <p>Playlists:</p>
+        <?php foreach($scl->getUserPlaylists($scl->getMyInfo()->id) as $list): ?>
+            <p><a href="/app/play.php?playlist=<?= $list->permalink_url; ?>"><?= $list->title; ?></a></p>
+        <?php endforeach; ?>
+    </div>
+
 </body>
 </html>

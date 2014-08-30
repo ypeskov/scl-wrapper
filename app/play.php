@@ -6,11 +6,12 @@ require_once('bootstrap.php');
 if ( isset($_SESSION['SclWrapper']['accessToken']['access_token']) ) {
     $scl->setAccessToken($_SESSION['SclWrapper']['accessToken']['access_token']);
 
-    if ( isset($_POST['playlist_name']) and isset($_POST['tracks']) ) {
-        var_dump($scl->createPlayList($_POST['playlist_name'], $_POST['tracks']));
-    } else {
-        echo "Please specify playlist and tracks.";
+    if ( isset($_GET['playlist']) ) {
+        $listUrl = $_GET['playlist'];
+
+        echo $scl->play($listUrl)->html;
     }
+
 } else {
     header('Location: ' . $sclConfig['redirectHome']);
     die();

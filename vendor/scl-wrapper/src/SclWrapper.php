@@ -39,6 +39,11 @@ class SclWrapper {
     protected $SclService;
 
     /**
+     * The URL of the service, used for search and getting permalinks.
+     */
+    const SERVICE_URL = 'http://soundcloud.com/';
+
+    /**
      * @param $config Array
      * @throws \Exception
      */
@@ -90,12 +95,43 @@ class SclWrapper {
         return $this;
     }
 
+    /**
+     * @return Array | stdClass
+     */
     public function getMyInfo() {
         if ( empty($this->myInfo) ) {
             $this->myInfo = json_decode($this->SclService->get('me'));
         }
 
         return $this->myInfo;
+    }
+
+    /**
+     * @param int $userId
+     * @return array | stdClass
+     */
+    public function getUserPlaylists($userId) {
+        $URI = 'users/' . $userId . '/playlists';
+
+        $lists = json_decode($this->SclService->get($URI));
+
+        return $lists;
+    }
+
+    /**
+     * Returns oembed object with "html" property to of a player.
+     *
+     * @param String $listUrl
+     * @return stdClass
+     */
+    public function play($listUrl) {
+        $this->SclService->setCurlOptions(array(CURLOPT_FOLLOWLOCATION => 1));
+
+        $embedInfo = json_decode($this
+            ->SclService
+            ->get('oembed', array('url' => $listUrl)));
+
+        return $embedInfo;
     }
 
     /**
@@ -203,7 +239,7 @@ class SclWrapper {
         $trackURI = '';
         foreach($tracks as $track) {
             try {
-                $trackInfo = $this->getTrackInfoByPermalink($track);
+                $trackInfo = $this->getTrackInfoByPermalink(self::SERVICE_URL . $track);
                 $trackURI .= '&playlist[tracks][][id]=' . $trackInfo->id;
             } catch(InvalidHttpResponseCodeException $e) {
                 continue;
@@ -212,7 +248,15 @@ class SclWrapper {
 
         $finalURI = $playlist . $trackURI;
 
-        $response = json_decode($this->SclService->post('playlists', $finalURI));
+        try {
+            $response = json_decode($this->SclService->post('playlists', $finalURI));
+        } catch(InvalidHttpResponseCodeException $e) {
+            /**
+             * @TODO: Think how better to process the possible error.
+             */
+            throw $e;
+        }
+
 
         return $response;
     }
