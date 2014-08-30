@@ -57,5 +57,12 @@ if ( isset($_SESSION['SclWrapper']['accessToken']['access_token']) ) {
         <input type="submit" value="Like long" />
     </form>
 
+    <hr />
+
+    <form name="follow_user" method="post" action="/app/follow.php">
+        <input name="user_to_follow" type="text" />
+        <br />
+        <input type="submit" value="Follow the user" />
+    </form>
 </body>
 </html>

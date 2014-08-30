@@ -6,10 +6,10 @@ require_once('bootstrap.php');
 if ( isset($_SESSION['SclWrapper']['accessToken']['access_token']) ) {
     $scl->setAccessToken($_SESSION['SclWrapper']['accessToken']['access_token']);
 
-    if ( isset($_POST['track_to_like']) ) {
-        $trackPermalink = $_POST['track_to_like'];
+    if ( isset($_POST['user_to_follow']) ) {
+        $userPermalink = $_POST['user_to_follow'];
 
-        var_dump($scl->likeTrack($trackPermalink));
+        var_dump($scl->followUser($userPermalink));
     }
 
 } else {

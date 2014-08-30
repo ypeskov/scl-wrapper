@@ -157,6 +157,28 @@ class SclWrapper {
     }
 
     /**
+     * Follows a user by a permalink.
+     *
+     * @param string $userLink  permalink of a user
+     * @return stdClass
+     * @throws \Exception
+     * @throws \Soundcloud\Exception\InvalidHttpResponseCodeException
+     */
+    public function followUser($userLink) {
+        $user = $this->getUserByPermalink($userLink);
+
+        $uri = 'me/followings/'. $user->id;
+
+        try {
+            $response = json_decode($this->SclService->put($uri, []));
+        } catch(InvalidHttpResponseCodeException $e) {
+            throw $e;
+        }
+
+        return $response;
+    }
+
+    /**
      * Return all uploaded tracks for users in $permalinks array.
      *
      * @param array $permalinks
@@ -255,6 +277,15 @@ class SclWrapper {
         return $this->authUrl;
     }
 
+    /**
+     * Creates a new playlist.
+     *
+     * @param string $listName
+     * @param array $tracks
+     * @return stdClass mixed
+     * @throws \Exception
+     * @throws \Soundcloud\Exception\InvalidHttpResponseCodeException
+     */
     public function createPlayList($listName, $tracks) {
         $playlist = 'playlist[title]=' . $listName;
 
